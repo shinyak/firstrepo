@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name= "firstrepo" default= "main" >
+	<property name="basedir" value="." />
+	<property name="ignore"  value="./vendor" />
+
+	<target name="main" depends= "init,phpunit,phpcs" ></target>
+
+	<!-- init -->
+	<target name="init" >
+		<delete dir="./build/coverage" includeemptydirs= "true"/>
+		<delete dir="./build/logs" includeemptydirs= "true"/>
+		<mkdir dir="./build/coverage"/>
+		<mkdir dir="./build/logs"/>
+		<exec command="php -i > log/build.phpinfo.txt" passthru="true" />
+	</target>
+
+	<!-- PHPUnit -->
+	<target name="phpunit">
+		<php expression="ini_set('memory_limit', '1G');" />
+		<exec command="phpunit --configuration ${basedir}/test/phpunit.xml" passthru="true" checkreturn="true" />
+	</target>
+
+	<!-- PHP_CodeSniffer -->
+	<target name="phpcs">
+		<php expression="ini_set('memory_limit', '1G');" />
+		<phpcodesniffer>
+			<fileset dir="./">
+				<include name="src/*.php" />
+			</fileset>
+			<formatter
+				type="checkstyle"
+				usefile="true"
+				outfile="${basedir}/build/logs/checkstyle.xml" />
+		</phpcodesniffer>
+	</target>
+</project>
+

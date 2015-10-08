@@ -1,0 +1,14 @@
+{
+	"config": {
+		"vendor-dir": "./vendor",
+		"bin-dir": "./vendor/bin"
+	},
+	"require": {
+		"squizlabs/php_codesniffer": "*"
+	},
+    "autoload": {
+        "psr-4": {
+            "FirstRepo\\": "src/"
+        }
+    }
+}
